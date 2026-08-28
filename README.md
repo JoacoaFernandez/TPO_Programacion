@@ -146,3 +146,33 @@ Los siguientes requerimientos indican qué debe poder hacer el sistema. La numer
 - La regla exacta para modificar prioridades según las fechas se definirá antes de programar esa parte, manteniendo la idea de dar más importancia a las tareas que estén más cerca de vencer.
 - El beneficio por cumplimiento podrá ser una tarea menos en la siguiente distribución o una alternativa similar que sirva para equilibrar el trabajo del grupo.
 - Si durante el desarrollo se modifica alguna funcionalidad o criterio de aceptación, el cambio se dejará aclarado en una versión posterior de este documento.
+
+
+
+## División de Requerimientos Funcionales
+
+### Joaquín Fernández — Lógica avanzada
+
+- **RF-09**: Modificar la descripción de una tarea ya cargada.
+- **RF-10**: Actualizar la prioridad de una tarea según la cercanía de su fecha.
+- **RF-11**: Mostrar estadísticas del trabajo realizado (total y por usuario).
+- **RF-12**: Repartir tareas según lo completado por cada usuario (algoritmo de reparto/beneficio).
+
+### Martina Fernández — Usuarios y Grupos
+
+- **RF-01**: Agregar, consultar y quitar usuarios.
+- **RF-02**: Crear grupos de trabajo y asociar usuarios a cada grupo.
+- **RF-13**: Controlar los datos ingresados (validaciones).
+
+### Natalia Apostolu — Creación y visualización de tareas
+
+- **RF-03**: Asignar cada tarea a un usuario.
+- **RF-04**: Crear una tarea (nombre, descripción, prioridad, fecha).
+- **RF-05**: Mostrar las tareas cargadas con su información principal.
+- **RF-06**: Marcar una tarea como completada.
+
+### Lucas Sambuco — Búsqueda, borrado y menú
+
+- **RF-07**: Eliminar una tarea.
+- **RF-08**: Buscar una tarea.
+- **RF-14**: Permitir salir del programa desde el menú.
