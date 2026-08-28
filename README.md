@@ -149,30 +149,112 @@ Los siguientes requerimientos indican qué debe poder hacer el sistema. La numer
 
 
 
-## División de Requerimientos Funcionales
+## TAREAS PARA EL EQUIPO
 
-### Joaquín Fernández — Lógica avanzada
+## Entrega del 40%
 
-- **RF-09**: Modificar la descripción de una tarea ya cargada.
-- **RF-10**: Actualizar la prioridad de una tarea según la cercanía de su fecha.
-- **RF-11**: Mostrar estadísticas del trabajo realizado (total y por usuario).
-- **RF-12**: Repartir tareas según lo completado por cada usuario (algoritmo de reparto/beneficio).
+**1. Crear usuarios y mostrar los usuarios cargados**
+- Joaquín: estructura de datos del usuario (diccionario base)
+- Martina: función crear usuario
+- Natalia: función mostrar usuarios
+- Lucas: validar que no se repita el mismo usuario
 
-### Martina Fernández — Usuarios y Grupos
+**2. Crear grupos de trabajo y asociar usuarios a cada grupo**
+- Joaquín: estructura de datos del grupo
+- Martina: función crear grupo
+- Natalia: función asociar usuario a grupo
+- Lucas: función mostrar grupo con sus usuarios
 
-- **RF-01**: Agregar, consultar y quitar usuarios.
-- **RF-02**: Crear grupos de trabajo y asociar usuarios a cada grupo.
-- **RF-13**: Controlar los datos ingresados (validaciones).
+**3. Agregar tareas (nombre, descripción, prioridad, fecha)**
+- Joaquín: estructura de datos de la tarea
+- Martina: función que carga nombre y descripción
+- Natalia: función que carga prioridad y fecha
+- Lucas: función que asigna estado inicial "Pendiente"
 
-### Natalia Apostolu — Creación y visualización de tareas
+**4. Asignar cada tarea a un usuario del grupo**
+- Joaquín: función que conecta tarea–usuario–grupo
+- Martina: función que verifica que el usuario pertenezca al grupo
+- Natalia: función que asigna la tarea al usuario
+- Lucas: función que actualiza la lista de tareas del usuario
 
-- **RF-03**: Asignar cada tarea a un usuario.
-- **RF-04**: Crear una tarea (nombre, descripción, prioridad, fecha).
-- **RF-05**: Mostrar las tareas cargadas con su información principal.
-- **RF-06**: Marcar una tarea como completada.
+**5. Mostrar tareas con responsable, fecha, prioridad y estado**
+- Joaquín: función que arma el formato final de impresión
+- Martina: función que muestra los datos básicos de una tarea
+- Natalia: función que filtra tareas por usuario
+- Lucas: función que filtra tareas por estado
 
-### Lucas Sambuco — Búsqueda, borrado y menú
+**6. Marcar una tarea como completada**
+- Joaquín: integrar el cambio de estado al flujo general
+- Martina: función que busca la tarea por nombre
+- Natalia: función que cambia el estado a "Completada"
+- Lucas: función que confirma el cambio y muestra mensaje
 
-- **RF-07**: Eliminar una tarea.
-- **RF-08**: Buscar una tarea.
-- **RF-14**: Permitir salir del programa desde el menú.
+**7. Controlar que los datos obligatorios estén cargados correctamente**
+- Joaquín: validar formato de fecha
+- Martina: validar campos de usuario (no vacíos)
+- Natalia: validar campos de tarea (no vacíos)
+- Lucas: validar que la prioridad esté dentro de las opciones definidas
+
+**8. Usar un menú básico para acceder a las opciones**
+- Joaquín: integración general del menú con todas las funciones
+- Martina: opciones del menú relacionadas a usuarios y grupos
+- Natalia: opciones del menú relacionadas a tareas
+- Lucas: opción "Salir" y estructura del bucle principal
+
+---
+
+## Entrega del 100%
+
+**1. Gestionar usuarios (agregar, consultar, quitar)**
+- Joaquín: función quitar usuario
+- Martina: función agregar usuario
+- Natalia: función consultar usuario
+- Lucas: validar que no se elimine un usuario con tareas pendientes
+
+**2. Crear grupos y asociar usuarios**
+- Joaquín: función quitar usuario de un grupo
+- Martina: función crear grupo
+- Natalia: función asociar usuario a grupo
+- Lucas: función mostrar grupo con sus usuarios
+
+**3. Crear tareas con nombre, descripción, prioridad, fecha, estado y usuario**
+- Joaquín: estructura de datos completa de la tarea
+- Martina: función carga de nombre y descripción
+- Natalia: función carga de prioridad, fecha y usuario asignado
+- Lucas: función asigna estado inicial
+
+**4. Mostrar, buscar, completar y eliminar tareas**
+- Joaquín: función eliminar tarea
+- Martina: función mostrar tareas
+- Natalia: función buscar tarea (por nombre)
+- Lucas: función marcar como completada
+
+**5. Modificar la descripción de una tarea**
+- Joaquín: función que busca la tarea a modificar
+- Martina: función que reemplaza la descripción
+- Natalia: función que muestra la tarea actualizada
+- Lucas: validar que la nueva descripción no esté vacía
+
+**6. Ordenar tareas por prioridad y actualizar prioridad según la fecha**
+- Joaquín: función que ordena tareas por prioridad
+- Martina: función que calcula cercanía de la fecha
+- Natalia: función que actualiza la prioridad según esa cercanía
+- Lucas: función que aplica la regla a todas las tareas del sistema
+
+**7. Mostrar estadísticas (asignadas, completadas, pendientes; grupo y usuario)**
+- Joaquín: función estadísticas generales del grupo
+- Martina: función estadísticas por usuario
+- Natalia: función contar tareas completadas
+- Lucas: función contar tareas pendientes
+
+**8. Repartir tareas según lo completado por cada usuario**
+- Joaquín: función que identifica quién completó más tareas
+- Martina: función que resuelve empates
+- Natalia: función que aplica el beneficio (una tarea menos)
+- Lucas: función que actualiza la próxima distribución
+
+**9. Menú completo y validaciones básicas**
+- Joaquín: integración general del menú con todas las funciones
+- Martina: validaciones de usuarios y grupos
+- Natalia: validaciones de tareas
+- Lucas: opción "Salir" y manejo general del bucle principal
