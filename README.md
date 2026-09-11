@@ -1,7 +1,7 @@
 # DOCUMENTO DE ALCANCE DEL PROYECTO
 ## Administrador de tareas (To-Do List)
 
-**PROGRAMACIÓN I**
+**PROGRAMACIÓN**
 
 ---
 
