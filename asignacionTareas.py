@@ -19,3 +19,4 @@ def mostrar_usuarios(lista_usuarios):
         return
     for u in lista_usuarios:
         print("Nombre:", u["nombre"], "- Grupo:", u["grupo"], "- Tareas completadas:", u["tareas_completadas"])
+
