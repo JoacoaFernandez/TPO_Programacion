@@ -133,15 +133,42 @@ def es_numero(valor):
         return False
 
 
+def es_bisiesto(anio):
+    return (anio % 4 == 0 and anio % 100 != 0) or (anio % 400 == 0)
+
+
+def dias_en_mes(mes, anio):
+    dias_por_mes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if mes == 2 and es_bisiesto(anio):
+        return 29
+    return dias_por_mes[mes - 1]
+
+
+def es_fecha_valida(dia, mes, anio):
+    if not (es_numero(dia) and es_numero(mes) and es_numero(anio)):
+        return False
+    if len(dia) != 2 or len(mes) != 2 or len(anio) != 4:
+        return False
+
+    dia = int(dia)
+    mes = int(mes)
+    anio = int(anio)
+
+    if mes < 1 or mes > 12:
+        return False
+    if dia < 1 or dia > dias_en_mes(mes, anio):
+        return False
+
+    return True
+
+
 def pedir_fecha():
     fecha = input("Ingrese la fecha de la tarea (dd/mm/aaaa): ").strip()
     partes = fecha.split("/")
-    partes_numericas = list(filter(es_numero, partes))
-    while len(partes) != 3 or len(partes_numericas) != 3:
-        print("Formato de fecha inválido, debe ser dd/mm/aaaa.")
+    while len(partes) != 3 or not es_fecha_valida(partes[0], partes[1], partes[2]):
+        print("Formato de fecha inválido. Debe ser dd/mm/aaaa con día, mes y año reales.")
         fecha = input("Ingrese la fecha de la tarea (dd/mm/aaaa): ").strip()
         partes = fecha.split("/")
-        partes_numericas = list(filter(es_numero, partes))
     return fecha
 
 
@@ -193,11 +220,13 @@ def interfaz_agregar_tarea(lista_tareas, lista_grupos, lista_usuarios):
     fecha = pedir_fecha()
     mostrar_grupos(lista_grupos, lista_usuarios)
     nombreGrupo = pedir_texto_no_vacio("Ingrese el grupo al que pertenece la tarea: ")
+
     grupo_real = buscar_grupo(lista_grupos, nombreGrupo)
     while grupo_real is None:
         print("Ese grupo no existe.")
         nombreGrupo = pedir_texto_no_vacio("Ingrese el grupo al que pertenece la tarea: ")
         grupo_real = buscar_grupo(lista_grupos, nombreGrupo)
+
     integrantes = list(filter(lambda u: u["grupo"] == grupo_real, lista_usuarios))
     if not integrantes:
         print("Ese grupo no tiene usuarios asociados. No se puede asignar la tarea.")
@@ -210,7 +239,15 @@ def interfaz_agregar_tarea(lista_tareas, lista_grupos, lista_usuarios):
         print("Ese usuario no pertenece al grupo seleccionado.")
         nombreResponsable = pedir_texto_no_vacio("Ingrese el nombre del responsable de la tarea: ")
     responsable_real = buscar_usuario(integrantes, nombreResponsable)["nombre_usuario"]
-    agregar_tarea(lista_tareas, nombre, descripcion, prioridad, fecha, grupo_real, responsable_real)
+    agregar_tarea(
+        lista_tareas,
+        nombre,
+        descripcion,
+        prioridad,
+        fecha,
+        grupo_real,
+        responsable_real
+    )
     print(f"Tarea '{nombre}' creada y asignada a {responsable_real}.")
 
 
