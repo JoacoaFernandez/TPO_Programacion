@@ -23,12 +23,13 @@ def mostrar_usuarios(lista_usuarios):
 
 
 def buscar_usuario(lista_usuarios, nombre_usuario):
-    return next(filter(lambda u: u["nombre_usuario"].lower() == nombre_usuario.lower(), lista_usuarios), None)
+    encontrados = list(filter(lambda u: u["nombre_usuario"].lower() == nombre_usuario.lower(), lista_usuarios))
+    return encontrados[0] if encontrados else None
 
 
 def agregar_grupo(lista_grupos, nombre_grupo):
-    existe = next(filter(lambda g: g.lower() == nombre_grupo.lower(), lista_grupos), None)
-    if existe is not None:
+    existentes = list(filter(lambda g: g.lower() == nombre_grupo.lower(), lista_grupos))
+    if existentes:
         return None
     lista_grupos.append(nombre_grupo)
     return nombre_grupo
@@ -44,7 +45,8 @@ def mostrar_grupos(lista_grupos, lista_usuarios):
 
 
 def buscar_grupo(lista_grupos, nombre_grupo):
-    return next(filter(lambda g: g.lower() == nombre_grupo.lower(), lista_grupos), None)
+    encontrados = list(filter(lambda g: g.lower() == nombre_grupo.lower(), lista_grupos))
+    return encontrados[0] if encontrados else None
 
 
 def asociar_usuario_a_grupo(lista_usuarios, lista_grupos, nombre_usuario, nombre_grupo):
@@ -90,7 +92,8 @@ def mostrar_tareas(lista_tareas):
 
 
 def buscar_tarea_por_id(lista_tareas, idTarea):
-    return next(filter(lambda t: t["id"] == idTarea, lista_tareas), None)
+    encontradas = list(filter(lambda t: t["id"] == idTarea, lista_tareas))
+    return encontradas[0] if encontradas else None
 
 
 def marcar_tarea_completada(lista_tareas, lista_usuarios, idTarea):
@@ -122,13 +125,23 @@ def pedir_prioridad():
     return prioridad
 
 
+def es_numero(valor):
+    try:
+        int(valor)
+        return True
+    except ValueError:
+        return False
+
+
 def pedir_fecha():
     fecha = input("Ingrese la fecha de la tarea (dd/mm/aaaa): ").strip()
     partes = fecha.split("/")
-    while len(partes) != 3 or not all(parte.isdigit() for parte in partes):
+    partes_numericas = list(filter(es_numero, partes))
+    while len(partes) != 3 or len(partes_numericas) != 3:
         print("Formato de fecha inválido, debe ser dd/mm/aaaa.")
         fecha = input("Ingrese la fecha de la tarea (dd/mm/aaaa): ").strip()
         partes = fecha.split("/")
+        partes_numericas = list(filter(es_numero, partes))
     return fecha
 
 
@@ -207,7 +220,7 @@ def interfaz_marcar_tarea_completada(lista_tareas, lista_usuarios):
         return
     mostrar_tareas(lista_tareas)
     idIngresado = input("Ingrese el ID de la tarea a marcar como completada: ").strip()
-    while not idIngresado.isdigit():
+    while not es_numero(idIngresado):
         print("Debe ingresar un número válido.")
         idIngresado = input("Ingrese el ID de la tarea a marcar como completada: ").strip()
     exito = marcar_tarea_completada(lista_tareas, lista_usuarios, int(idIngresado))
@@ -259,7 +272,7 @@ def main():
     while opcion != 0:
         mostrar_menu()
         opcionIngresada = input("Seleccione una opción: ").strip()
-        while not opcionIngresada.isdigit():
+        while not es_numero(opcionIngresada):
             print("Debe ingresar un número.")
             opcionIngresada = input("Seleccione una opción: ").strip()
         opcion = int(opcionIngresada)
