@@ -117,24 +117,16 @@ def pedir_texto_no_vacio(mensaje):
     return valor
 
 
-def pedir_nombre(mensaje):
-    return pedir_texto_no_vacio(mensaje).capitalize()
-
-
 def pedir_prioridad():
-    prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip().capitalize()
+    prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip()
     while prioridad not in ("Alta", "Media", "Baja"):
         print("Prioridad inválida. Debe ser Alta, Media o Baja.")
-        prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip().capitalize()
+        prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip()
     return prioridad
 
 
 def es_numero(valor):
-    try:
-        int(valor)
-        return True
-    except (TypeError, ValueError):
-        return False
+    return valor.isdigit()
 
 
 def es_bisiesto(anio):
@@ -177,7 +169,7 @@ def pedir_fecha():
 
 
 def interfaz_agregar_usuario(lista_usuarios):
-    nombre = pedir_nombre("Ingrese el nombre del usuario: ")
+    nombre = pedir_texto_no_vacio("Ingrese el nombre del usuario: ")
     if buscar_usuario(lista_usuarios, nombre) is not None:
         print("Ya existe un usuario con ese nombre.")
         return
@@ -186,7 +178,7 @@ def interfaz_agregar_usuario(lista_usuarios):
 
 
 def interfaz_agregar_grupo(lista_grupos):
-    nombre = pedir_nombre("Ingrese el nombre del grupo: ")
+    nombre = pedir_texto_no_vacio("Ingrese el nombre del grupo: ")
     if agregar_grupo(lista_grupos, nombre) is None:
         print("Ya existe un grupo con ese nombre.")
     else:
@@ -201,15 +193,15 @@ def interfaz_asociar_usuario_a_grupo(lista_usuarios, lista_grupos):
         print("No hay grupos cargados. Cree un grupo primero.")
         return
     mostrar_usuarios(lista_usuarios)
-    nombreUsuario = pedir_nombre("Ingrese el nombre del usuario: ")
+    nombreUsuario = pedir_texto_no_vacio("Ingrese el nombre del usuario: ")
     while buscar_usuario(lista_usuarios, nombreUsuario) is None:
         print("Ese usuario no existe.")
-        nombreUsuario = pedir_nombre("Ingrese el nombre del usuario: ")
+        nombreUsuario = pedir_texto_no_vacio("Ingrese el nombre del usuario: ")
     mostrar_grupos(lista_grupos, lista_usuarios)
-    nombreGrupo = pedir_nombre("Ingrese el nombre del grupo: ")
+    nombreGrupo = pedir_texto_no_vacio("Ingrese el nombre del grupo: ")
     while buscar_grupo(lista_grupos, nombreGrupo) is None:
         print("Ese grupo no existe.")
-        nombreGrupo = pedir_nombre("Ingrese el nombre del grupo: ")
+        nombreGrupo = pedir_texto_no_vacio("Ingrese el nombre del grupo: ")
     asociar_usuario_a_grupo(lista_usuarios, lista_grupos, nombreUsuario, nombreGrupo)
     print(f"Usuario '{nombreUsuario}' asociado al grupo '{nombreGrupo}'.")
 
@@ -218,17 +210,17 @@ def interfaz_agregar_tarea(lista_tareas, lista_grupos, lista_usuarios):
     if not lista_grupos:
         print("No hay grupos cargados. Cree un grupo primero.")
         return
-    nombre = pedir_nombre("Ingrese el nombre de la tarea: ")
+    nombre = pedir_texto_no_vacio("Ingrese el nombre de la tarea: ")
     descripcion = pedir_texto_no_vacio("Ingrese la descripción de la tarea: ")
     prioridad = pedir_prioridad()
     fecha = pedir_fecha()
     mostrar_grupos(lista_grupos, lista_usuarios)
-    nombreGrupo = pedir_nombre("Ingrese el grupo al que pertenece la tarea: ")
+    nombreGrupo = pedir_texto_no_vacio("Ingrese el grupo al que pertenece la tarea: ")
 
     grupo_real = buscar_grupo(lista_grupos, nombreGrupo)
     while grupo_real is None:
         print("Ese grupo no existe.")
-        nombreGrupo = pedir_nombre("Ingrese el grupo al que pertenece la tarea: ")
+        nombreGrupo = pedir_texto_no_vacio("Ingrese el grupo al que pertenece la tarea: ")
         grupo_real = buscar_grupo(lista_grupos, nombreGrupo)
 
     integrantes = list(filter(lambda u: u["grupo"] == grupo_real, lista_usuarios))
@@ -238,10 +230,10 @@ def interfaz_agregar_tarea(lista_tareas, lista_grupos, lista_usuarios):
     print(f"Usuarios del grupo '{grupo_real}':")
     for u in integrantes:
         print("-", u["nombre_usuario"])
-    nombreResponsable = pedir_nombre("Ingrese el nombre del responsable de la tarea: ")
+    nombreResponsable = pedir_texto_no_vacio("Ingrese el nombre del responsable de la tarea: ")
     while buscar_usuario(integrantes, nombreResponsable) is None:
         print("Ese usuario no pertenece al grupo seleccionado.")
-        nombreResponsable = pedir_nombre("Ingrese el nombre del responsable de la tarea: ")
+        nombreResponsable = pedir_texto_no_vacio("Ingrese el nombre del responsable de la tarea: ")
     responsable_real = buscar_usuario(integrantes, nombreResponsable)["nombre_usuario"]
     agregar_tarea(
         lista_tareas,
@@ -310,19 +302,15 @@ def main():
         0: salir,
     }
     opcion = -1
-    try:
-        while opcion != 0:
-            mostrar_menu()
+    while opcion != 0:
+        mostrar_menu()
+        opcionIngresada = input("Seleccione una opción: ").strip()
+        while not es_numero(opcionIngresada):
+            print("Debe ingresar un número.")
             opcionIngresada = input("Seleccione una opción: ").strip()
-            while not es_numero(opcionIngresada):
-                print("Debe ingresar un número.")
-                opcionIngresada = input("Seleccione una opción: ").strip()
-            opcion = int(opcionIngresada)
-            funcion = opciones.get(opcion, opcion_invalida)
-            funcion()
-    except (EOFError, KeyboardInterrupt):
-        print("\nSaliendo del programa...")
+        opcion = int(opcionIngresada)
+        funcion = opciones.get(opcion, opcion_invalida)
+        funcion()
 
 
-if __name__ == "__main__":
-    main()
+main()
