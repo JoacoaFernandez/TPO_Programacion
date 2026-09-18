@@ -126,7 +126,8 @@ def pedir_prioridad():
 
 
 def es_numero(valor):
-    return valor.isdigit()
+    numeros = list(filter(lambda caracter: caracter in "0123456789", valor))
+    return valor != "" and len(numeros) == len(valor)
 
 
 def es_bisiesto(anio):
