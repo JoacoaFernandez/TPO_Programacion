@@ -118,19 +118,15 @@ def pedir_texto_no_vacio(mensaje):
 
 
 def pedir_prioridad():
-    prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip().capitalize()
+    prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip()
     while prioridad not in ("Alta", "Media", "Baja"):
         print("Prioridad inválida. Debe ser Alta, Media o Baja.")
-        prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip().capitalize()
+        prioridad = input("Ingrese la prioridad (Alta/Media/Baja): ").strip()
     return prioridad
 
 
 def es_numero(valor):
-    try:
-        int(valor)
-        return True
-    except ValueError:
-        return False
+    return valor.isdigit()
 
 
 def es_bisiesto(anio):
